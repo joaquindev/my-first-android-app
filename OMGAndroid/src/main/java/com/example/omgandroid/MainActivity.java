@@ -10,13 +10,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+    TextView mainTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //1. Access the Textview defined in layout XML
+        //and then set its text
+        mainTextView = (TextView) findViewById(R.id.main_textview);
+        mainTextView.setText("Set in JAVA code!");
 
         /*if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
