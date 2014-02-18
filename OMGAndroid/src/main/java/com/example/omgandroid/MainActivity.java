@@ -10,11 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     TextView mainTextView;
+    Button mainButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,11 @@ public class MainActivity extends Activity {
         //and then set its text
         mainTextView = (TextView) findViewById(R.id.main_textview);
         mainTextView.setText("Set in JAVA code!");
+
+        //2. Access the Button defined in layout XML
+        // and listen for it here
+        mainButton = (Button) findViewById(R.id.main_button);
+        mainButton.setOnClickListener(this);
 
         /*if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -53,6 +60,11 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        mainTextView.setText("Button pressed!");
     }
 
     /**
