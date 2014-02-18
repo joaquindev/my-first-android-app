@@ -4,5 +4,6 @@
     <string name="app_name">OMG Android</string>
     <string name="text_view">Joaquindev is learning Android on his PC!!</string>
     <string name="action_settings">Settings</string>
+    <string name="button">Click me</string>
 
 </resources>
