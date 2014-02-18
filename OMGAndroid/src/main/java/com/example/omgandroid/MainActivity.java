@@ -2,7 +2,9 @@ package com.example.omgandroid;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -89,7 +91,37 @@ public class MainActivity extends Activity implements View.OnClickListener,
             //If the name is valid, displays a Toast welcoming them
             Toast.makeText(this,"Welcome back " + name + "!", Toast.LENGTH_LONG);
         }else{
-            Toast.makeText(this,"First hi!! ", Toast.LENGTH_LONG);
+            //otherwise, show a dialog to ask for their name
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Hello!");
+            alert.setMessage("What is your name?");
+
+            //Create EditText for entry
+            final EditText input = new EditText(this);
+            alert.setView(input);
+
+            //Make an OK button to save the name
+            alert.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int whichButton) {
+                    //Grab the EditText's input
+                    String inputName = input.getText().toString();
+                    //Put it into memory
+                    SharedPreferences.Editor e = mSharedPreferences.edit();
+                    e.putString(PREF_NAME, inputName);
+                    e.commit();
+
+                    //Welcome the new user
+                    Toast.makeText(getApplicationContext(), "Welcome, " + inputName + "!", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            //Make a CANCEL button
+            alert.setNegativeButton("Cancel!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int whichButton) {}
+            });
+            alert.show();
         }
     }
 
