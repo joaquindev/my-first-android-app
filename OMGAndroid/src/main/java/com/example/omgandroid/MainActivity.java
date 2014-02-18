@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +20,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener,
+        AdapterView.OnItemClickListener {
 
     TextView mainTextView;
     Button mainButton;
@@ -54,6 +57,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         mNameList);
         //4.2 Set the ListView to use the ArrayAdapter
         mainListView.setAdapter(mArrayAdapter);
+
+        //5. Set this Activity to react to list items being pressed
+        mainListView.setOnItemClickListener(this);
 
         /*if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -91,6 +97,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         //4.4 Also add that value to the list shown in the ListView
         mNameList.add(mainEditText.getText().toString());
         mArrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //Log the item's position and contents to the console in Debug
+        Log.d("omg android", position + ": " + mNameList.get(position));
     }
 
     /**
