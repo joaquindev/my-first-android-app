@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,9 @@ public class MainActivity extends Activity implements View.OnClickListener,
     ArrayAdapter mArrayAdapter;
     ArrayList mNameList = new ArrayList();
     ShareActionProvider mShareActionProvider;
+    private static final String PREFS = "prefs";
+    private static final String PREF_NAME = "name";
+    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +69,28 @@ public class MainActivity extends Activity implements View.OnClickListener,
         //5. Set this Activity to react to list items being pressed
         mainListView.setOnItemClickListener(this);
 
+        //7. Greet the user, or ask for their name if new
+        displayWelcome();
+
         /*if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    private void displayWelcome() {
+        //Access the device's key-value storage
+        mSharedPreferences = getSharedPreferences(PREFS, MODE_PRIVATE);
+
+        String name = mSharedPreferences.getString(PREF_NAME, "");
+        //Read the user's name or an empty string if nothing found
+        if (name.length() > 0) {
+            //If the name is valid, displays a Toast welcoming them
+            Toast.makeText(this,"Welcome back " + name + "!", Toast.LENGTH_LONG);
+        }else{
+            Toast.makeText(this,"First hi!! ", Toast.LENGTH_LONG);
+        }
     }
 
 
